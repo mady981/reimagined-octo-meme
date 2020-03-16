@@ -60,10 +60,10 @@
     <ClInclude Include="Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Location.h">
+    <ClInclude Include="Dud.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Dud.h">
+    <ClInclude Include="Sprits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,7 +101,7 @@
     <ClCompile Include="Dud.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Location.cpp">
+    <ClCompile Include="Sprits.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

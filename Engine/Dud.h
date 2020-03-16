@@ -1,14 +1,15 @@
 #pragma once
-#include "Location.h"
 #include "Vector.h"
+#include "Sprits.h"
 class Dud
 {
 public:
-	Dud( Location& in_loc );
-	void MovBy( Location& delta_loc );
-	void Draw();
+	Dud( const Vector& pos_in );
+	void MovBy( Vector& delta_mov );
+	void Draw( Sprite& sp );
 private:
-	Location loc;
-	Vector vec;
+	Vector pos;
+	Vector mov;
+
 };
 

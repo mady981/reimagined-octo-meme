@@ -24,7 +24,9 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+    sp( gfx ),
+    dud({ 50,40 })
 {
 }
 
@@ -42,4 +44,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+    dud.Draw( sp );
 }

@@ -1,12 +1,16 @@
 #include "Dud.h"
 
-Dud::Dud(Location& in_loc)
+Dud::Dud( const Vector& pos_in )
 {
-	loc = in_loc;
+	pos = pos_in;
 }
 
-void Dud::MovBy(Location& delta_loc)
+void Dud::MovBy( Vector& delta_mov )
 {
-	Vector( delta_loc.x , delta_loc.y );
-	
+	Vector( delta_mov.x,delta_mov.y );
+}
+
+void Dud::Draw( Sprite& sp )
+{
+	sp.SpriteDud( pos );
 }
