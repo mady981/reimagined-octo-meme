@@ -12,7 +12,7 @@ public:
 	float getLengthSq() const;
 	Vector& Nomalize();
 	Vector getNomalize() const;
-private:
+public:
 	float x;
 	float y;
 };
