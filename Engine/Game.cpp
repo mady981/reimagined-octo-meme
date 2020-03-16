@@ -40,6 +40,31 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+    if ( wnd.kbd.KeyIsPressed( VK_UP ) )
+    {
+        delta_mov = { 0,-1 };
+    }
+    if ( wnd.kbd.KeyIsPressed( VK_DOWN ) )
+    {
+        delta_mov = { 0,1 };
+    }
+    if ( wnd.kbd.KeyIsPressed( VK_LEFT ) )
+    {
+        delta_mov = { -1,0 };
+    }
+    if ( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+    {
+        delta_mov = { 1,0 };
+    }
+    if ( wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+    {
+        delta_mov.y = -1;
+    }
+    if ( wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+    {
+        delta_mov.y = 1;
+    }
+    dud.MovBy( delta_mov );
 }
 
 void Game::ComposeFrame()

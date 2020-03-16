@@ -7,7 +7,7 @@ Dud::Dud( const Vector& pos_in )
 
 void Dud::MovBy( Vector& delta_mov )
 {
-	Vector( delta_mov.x,delta_mov.y );
+	pos += delta_mov;
 }
 
 void Dud::Draw( Sprite& sp )

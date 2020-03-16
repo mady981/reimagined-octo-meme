@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Dud.h"
+#include "Vector.h"
 
 class Game
 {
@@ -40,4 +41,5 @@ private:
 	Graphics gfx;
     Sprite sp;
     Dud dud;
+    Vector delta_mov = { 0,0 };
 };
