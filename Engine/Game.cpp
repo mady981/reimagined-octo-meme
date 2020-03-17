@@ -22,12 +22,21 @@
 #include "Game.h"
 
 Game::Game( MainWindow& wnd )
-	:
-	wnd( wnd ),
-	gfx( wnd ),
+    :
+    wnd( wnd ),
+    gfx( wnd ),
     sp( gfx ),
-    dud({ 50,40 })
+    dud( { 50,40 },{ 0,0 } ),
+    rng( std::random_device()( ) )
 {
+    for ( int i = 0; i < maxEnemys; ++i )
+    {
+        std::uniform_int_distribution<int> xPos( 50,gfx.ScreenWidth - 50 );
+        std::uniform_int_distribution<int> yPos( 50,gfx.ScreenHeight - 50 );
+        std::uniform_real_distribution<float> xMov( -2.0f,2.0f );
+        std::uniform_real_distribution<float> yMov( -2.0f,2.0f );
+        eny[i].Init( float( xPos( rng ) ),float( yPos( rng ) ),xMov( rng ),yMov( rng ) );
+    }
 }
 
 void Game::Go()
@@ -65,9 +74,17 @@ void Game::UpdateModel()
         delta_mov.y = 1;
     }
     dud.MovBy( delta_mov );
+    for ( int i = 0; i < maxEnemys; ++i )
+    {
+        eny[i].MoveBy();
+    }
 }
 
 void Game::ComposeFrame()
 {
     dud.Draw( sp );
+    for ( int i = 0; i < maxEnemys; ++i )
+    {
+        eny[i].Draw( sp );
+    }
 }

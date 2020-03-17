@@ -4,7 +4,7 @@
 class Dud
 {
 public:
-	Dud( const Vector& pos_in );
+	Dud( const Vector& pos_in,const Vector& mov_in );
 	void MovBy( Vector& delta_mov );
 	void Draw( Sprite& sp );
 private:

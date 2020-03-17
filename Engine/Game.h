@@ -23,8 +23,9 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Dud.h"
 #include "Vector.h"
+#include "Dud.h"
+#include "Enemy.h"
 
 class Game
 {
@@ -37,9 +38,13 @@ private:
 	void ComposeFrame();
 	void UpdateModel();
 private:
+    static constexpr int maxEnemys = 10;
+private:
 	MainWindow& wnd;
 	Graphics gfx;
     Sprite sp;
     Dud dud;
+    std::mt19937 rng;
+    Enemy eny[maxEnemys];
     Vector delta_mov = { 0,0 };
 };

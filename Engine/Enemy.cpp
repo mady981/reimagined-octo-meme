@@ -1,21 +1,20 @@
 #include "Enemy.h"
 
-Enemy::Enemy( Vector& pos_in,Vector& mov_in )
-	:
-	pos( pos_in ),
-	mov( mov_in )
+void Enemy::Init( float xPos_in,float yPos_in,float xMov_in,float yMov_in )
 {
+	pos = { xPos_in,yPos_in };
+	mov = { xMov_in,yMov_in };
 }
 
 void Enemy::MoveBy()
 {
-	if ( pos.x == 0 || pos.x == Graphics::ScreenWidth )
+	if ( pos.x <= 26 || pos.x >= Graphics::ScreenWidth - 26 )
 	{
-		mov.x * -1;
+		mov.x *= -1;
 	}
-	if ( pos.y == 0 || pos.y == Graphics::ScreenHeight )
+	if ( pos.y <= 26 || pos.y >= Graphics::ScreenHeight - 26 )
 	{
-		mov.y * -1;
+		mov.y *= -1;
 	}
 	pos += mov;
 }
