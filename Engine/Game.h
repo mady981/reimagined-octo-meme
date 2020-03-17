@@ -39,6 +39,7 @@ private:
 	void UpdateModel();
 private:
     static constexpr int maxEnemys = 10;
+    bool GameOver = false;
 private:
 	MainWindow& wnd;
 	Graphics gfx;

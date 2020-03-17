@@ -17,3 +17,8 @@ void Dud::Draw( Sprite& sp )
 {
 	sp.SpriteDud( pos );
 }
+
+const Vector& Dud::getpos() const
+{
+	return mov;
+}

@@ -28,6 +28,11 @@ Vector& Vector::operator*=(float rhs)
 	return *this = *this * rhs;
 }
 
+bool Vector::operator==( const Vector& rhs ) const
+{
+	return x == rhs.x && y == rhs.y;
+}
+
 float Vector::getLength() const
 {
 	return std::sqrt( getLengthSq() );

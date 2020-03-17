@@ -23,3 +23,8 @@ void Enemy::Draw( Sprite& sp )
 {
 	sp.SpriteEnemy( pos );
 }
+
+bool Enemy::inDud( const Dud& dud )
+{
+	return pos == dud.getpos();
+}

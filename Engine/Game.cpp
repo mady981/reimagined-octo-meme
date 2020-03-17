@@ -49,34 +49,49 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-    if ( wnd.kbd.KeyIsPressed( VK_UP ) )
-    {
-        delta_mov = { 0,-1 };
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_DOWN ) )
-    {
-        delta_mov = { 0,1 };
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_LEFT ) )
-    {
-        delta_mov = { -1,0 };
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
-    {
-        delta_mov = { 1,0 };
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
-    {
-        delta_mov.y = -1;
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
-    {
-        delta_mov.y = 1;
-    }
-    dud.MovBy( delta_mov );
     for ( int i = 0; i < maxEnemys; ++i )
     {
-        eny[i].MoveBy();
+        if ( eny[i].inDud( dud ) )
+        {
+            GameOver = true;
+            break;
+        }
+    }
+    if ( GameOver )
+    {
+        gfx.DrawRect( 300,400,300,400,{ 128,128,128 } );
+    }
+    else
+    {
+        if ( wnd.kbd.KeyIsPressed( VK_UP ) )
+        {
+            delta_mov = { 0,-1 };
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_DOWN ) )
+        {
+            delta_mov = { 0,1 };
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_LEFT ) )
+        {
+            delta_mov = { -1,0 };
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+        {
+            delta_mov = { 1,0 };
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+        {
+            delta_mov.y = -1;
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+        {
+            delta_mov.y = 1;
+        }
+        dud.MovBy( delta_mov );
+        for ( int i = 0; i < maxEnemys; ++i )
+        {
+            eny[i].MoveBy();
+        }
     }
 }
 
