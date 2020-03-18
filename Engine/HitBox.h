@@ -5,7 +5,10 @@ class HitBox
 public:
 	HitBox() = default;
 	HitBox( float left_in,float right_in,float top_in,float bottem_in );
-	bool operator==( const HitBox& other ) const;
+	HitBox( const Vector& topleft,const Vector& bottemright );
+	HitBox( const Vector& topleft,float width,float height );
+	bool isOverlappingWith( const HitBox& other ) const;
+	static HitBox fromCenter( const Vector& center,float width,float height );
 public:
 	float left;
 	float right;
