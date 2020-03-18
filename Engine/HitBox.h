@@ -15,4 +15,3 @@ public:
 	float top;
 	float bottem;
 };
-
