@@ -3,14 +3,30 @@
 HitBox::HitBox( float left_in,float right_in,float top_in,float bottem_in )
 	:
 	left( left_in ),
-	right( right_in ),
+	right( left_in ),
 	top( top_in ),
 	bottem( bottem_in )
 {
 }
 
-bool HitBox::operator==( const HitBox& other ) const
+HitBox::HitBox( const Vector& topleft,const Vector& bottemright )
 {
-	return left > other.right && right < other.left
-		&& top > other.bottem && bottem < other.top;
+	HitBox( topleft.x,bottemright.x,topleft.y,bottemright.y );
+}
+
+HitBox::HitBox( const Vector& topleft,float width,float height )
+{
+	HitBox( topleft,topleft + Vector( width,height ) );
+}
+
+bool HitBox::isOverlappingWith( const HitBox& other ) const
+{
+	return right > other.left&& left < other.right
+		&& bottem > other.top&& top < other.bottem;
+}
+
+HitBox HitBox::fromCenter( const Vector& center,float width,float height )
+{
+	const Vector half( width * 0.5f,height * 0.5f );
+	return HitBox( center - half,center + half );
 }
