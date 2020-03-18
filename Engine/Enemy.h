@@ -1,18 +1,24 @@
 #pragma once
 #include "Vector.h"
-#include "Sprits.h"
-#include "Dud.h"
-#include <random>
+#include "HitBox.h"
+#include "Graphics.h"
 class Enemy
 {
 public:
 	Enemy() = default;
-	void Init( float xPos_in,float yPos_in,float xMov_in,float yMov_in );
-	void MoveBy();
-	void Draw( Sprite& sp );
-	bool inDud( const Dud& dud );
+	void Init( const Vector& pos_in,const Vector& vel_in );
+	void MovBy();
+	void Draw( Graphics& gfx );
+	bool DoWallCollision( const HitBox& walls );
+	void ReboundX();
+	void ReboundY();
+	HitBox GetHitBox() const;
+	const float getDimanision() const;
+private:
+	static constexpr float dimansion = 20.0f;
+	static constexpr Color EnemyColor = { 255,0,0 };
 private:
 	Vector pos;
-	Vector mov;
+	Vector vel;
 };
 

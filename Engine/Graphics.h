@@ -24,6 +24,7 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include "HitBox.h"
 
 class Graphics
 {
@@ -57,10 +58,14 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
-	void DrawRect( int x0 , int y0 , int x1 , int y1 , Color c );
-	void DrawRectDim( int x0 , int y0 , int height , int width , Color c )
+	void DrawRect( int x0,int y0,int x1,int y1,Color c );
+	void DrawRectHB( const HitBox& hb,Color c )
 	{
-		DrawRect( x0,y0,x0 + height,y0 + width, c );
+		DrawRect( int( hb.left ),int( hb.top ),int( hb.right ),int( hb.bottem ),c );
+	}
+	void DrawRectDim( int x0,int y0,int width,int height,Color c )
+	{
+		DrawRect( x0,y0,x0 + width,y0 + height,c );
 	}
 	~Graphics();
 private:

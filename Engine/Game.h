@@ -26,6 +26,7 @@
 #include "Vector.h"
 #include "Dud.h"
 #include "Enemy.h"
+#include <random>
 
 class Game
 {
@@ -38,14 +39,14 @@ private:
 	void ComposeFrame();
 	void UpdateModel();
 private:
-    static constexpr int maxEnemys = 10;
-    bool GameOver = false;
+    static constexpr int maxEnemys = 5;
 private:
 	MainWindow& wnd;
 	Graphics gfx;
     Sprite sp;
     Dud dud;
+    Vector delta_mov = { 0,0 };
     std::mt19937 rng;
     Enemy eny[maxEnemys];
-    Vector delta_mov = { 0,0 };
+    HitBox walls;
 };

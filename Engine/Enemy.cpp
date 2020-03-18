@@ -1,30 +1,68 @@
 #include "Enemy.h"
 
-void Enemy::Init( float xPos_in,float yPos_in,float xMov_in,float yMov_in )
+void Enemy::Init( const Vector& pos_in,const Vector& vel_in )
 {
-	pos = { xPos_in,yPos_in };
-	mov = { xMov_in,yMov_in };
+	pos = pos_in;
+	vel = vel_in;
 }
 
-void Enemy::MoveBy()
+void Enemy::MovBy()
 {
-	if ( pos.x <= 26 || pos.x >= Graphics::ScreenWidth - 26 )
+	pos += vel;
+}
+
+void Enemy::Draw( Graphics& gfx )
+{
+	gfx.DrawRectHB( GetHitBox(),EnemyColor );
+}
+
+bool Enemy::DoWallCollision( const HitBox& walls )
+{
+	bool collision = false;
+	const HitBox hb = GetHitBox();
+	if ( hb.left <= walls.left )
 	{
-		mov.x *= -1;
+		pos.x += ( walls.left - hb.left );
+		ReboundX();
+		collision = true;
 	}
-	if ( pos.y <= 26 || pos.y >= Graphics::ScreenHeight - 26 )
+	if ( hb.right >= walls.right )
 	{
-		mov.y *= -1;
+		pos.x += ( walls.right - hb.right );
+		ReboundX();
+		collision = true;
 	}
-	pos += mov;
+	if ( hb.top <= walls.top )
+	{
+		pos.y += ( walls.top - hb.top );
+		ReboundY();
+		collision = true;
+	}
+	if ( hb.bottem >= walls.bottem )
+	{
+		pos.y += ( walls.bottem - hb.bottem );
+		ReboundY();
+		collision = true;
+	}
+	return collision;
 }
 
-void Enemy::Draw( Sprite& sp )
+void Enemy::ReboundX()
 {
-	sp.SpriteEnemy( pos );
+	vel.x = -vel.x;
 }
 
-bool Enemy::inDud( const Dud& dud )
+void Enemy::ReboundY()
 {
-	return pos == dud.getpos();
+	vel.y = -vel.y;
+}
+
+HitBox Enemy::GetHitBox() const
+{
+	return HitBox( pos,dimansion,dimansion );
+}
+
+const float Enemy::getDimanision() const
+{
+	return dimansion;
 }
