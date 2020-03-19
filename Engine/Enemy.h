@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector.h"
 #include "HitBox.h"
+#include "Dud.h"
 #include "Graphics.h"
 class Enemy
 {
@@ -12,6 +13,8 @@ public:
 	bool DoWallCollision( const HitBox& walls );
 	void ReboundX();
 	void ReboundY();
+	bool DoDudCollision( const Dud& dud );
+	bool DoSpawnCollision( const Dud& dud );
 	HitBox GetHitBox() const;
 	const float getDimanision() const;
 private:

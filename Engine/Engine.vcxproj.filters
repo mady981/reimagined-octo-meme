@@ -63,9 +63,6 @@
     <ClInclude Include="Dud.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sprits.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HitBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,9 +102,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dud.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprits.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HitBox.cpp">

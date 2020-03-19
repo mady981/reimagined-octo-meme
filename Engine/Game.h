@@ -39,11 +39,14 @@ private:
 	void ComposeFrame();
 	void UpdateModel();
 private:
-    static constexpr int maxEnemys = 5;
+    static constexpr int maxEnemys = 100;
+    int nEnemys = 1;
+    static constexpr int CounterGoal = 100;
+    int Counter = 0;
+    bool pause = false;
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-    Sprite sp;
     Dud dud;
     Vector delta_mov = { 0,0 };
     std::mt19937 rng;

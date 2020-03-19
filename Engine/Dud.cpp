@@ -13,12 +13,17 @@ void Dud::MovBy( Vector& delta_mov )
 	pos += mov;
 }
 
-void Dud::Draw( Sprite& sp )
+void Dud::Draw( Graphics& gfx )
 {
-	sp.SpriteDud( pos );
+	gfx.DrawRectHB( getHitBox(),DudColor );
 }
 
-const Vector& Dud::getpos() const
+HitBox Dud::getHitBox() const
 {
-	return mov;
+	return HitBox::fromCenter( pos,dimasion,dimasion );
+}
+
+HitBox Dud::getSaveZone() const
+{
+	return HitBox::fromCenter( pos,SaveZone,SaveZone );
 }

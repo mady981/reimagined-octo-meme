@@ -25,19 +25,17 @@ Game::Game( MainWindow& wnd )
     :
     wnd( wnd ),
     gfx( wnd ),
-    sp( gfx ),
     dud( { 50,40 },{ 0,0 } ),
-    rng( std::random_device()() ),
-    walls( 0.0f,float( gfx.ScreenWidth ),0.0f,float( gfx.ScreenHeight ) )
+    rng( std::random_device()( ) ),
+    walls( 0.0f,float( gfx.ScreenWidth ),0.0f,float( gfx.ScreenHeight ) ),
+    eny()
 {
-    for ( int i = 0; i < maxEnemys; ++i )
-    {
-        std::uniform_real_distribution<float> xPos( 0.0f,gfx.ScreenWidth - eny->getDimanision() );
-        std::uniform_real_distribution<float> yPos( 0.0f,gfx.ScreenHeight - eny->getDimanision() );
-        std::uniform_real_distribution<float> xMov( -2.5f,2.5f );
-        std::uniform_real_distribution<float> yMov( -2.5f,2.5f );
-        eny[i].Init( { xPos( rng ),yPos( rng ) },{ xMov( rng ),yMov( rng ) } );
-    }
+
+    std::uniform_real_distribution<float> xPos( 0.0f + eny->getDimanision() * 0.5f,gfx.ScreenWidth - eny->getDimanision() * 0.5f );
+    std::uniform_real_distribution<float> yPos( 0.0f + eny->getDimanision() * 0.5f,gfx.ScreenHeight - eny->getDimanision() * 0.5f );
+    std::uniform_real_distribution<float> xMov( -2.5f,2.5f );
+    std::uniform_real_distribution<float> yMov( -2.5f,2.5f );
+    eny[0].Init( { xPos( rng ),yPos( rng ) },{ xMov( rng ),yMov( rng ) } );
 }
 
 void Game::Go()
@@ -50,42 +48,71 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-    if ( wnd.kbd.KeyIsPressed( VK_UP ) )
+    if ( pause )
+    {}
+    else
     {
-        delta_mov = { 0,-1 };
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_DOWN ) )
-    {
-        delta_mov = { 0,1 };
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_LEFT ) )
-    {
-        delta_mov = { -1,0 };
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
-    {
-        delta_mov = { 1,0 };
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
-    {
-        delta_mov.y = -1;
-    }
-    if ( wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
-    {
-        delta_mov.y = 1;
-    }
-    dud.MovBy( delta_mov );
-    for ( int i = 0; i < maxEnemys; ++i )
-    {
-        eny[i].MovBy();
-        eny[i].DoWallCollision( walls );
+        ++Counter;
+        if ( Counter == CounterGoal )
+        {
+            if ( nEnemys > maxEnemys )
+            {
+            }
+            else
+            {
+                ++nEnemys;
+                do
+                {
+                    std::uniform_real_distribution<float> xPos( 0.0f + eny->getDimanision() * 0.5f,gfx.ScreenWidth - eny->getDimanision() * 0.5f );
+                    std::uniform_real_distribution<float> yPos( 0.0f + eny->getDimanision() * 0.5f,gfx.ScreenHeight - eny->getDimanision() * 0.5f );
+                    std::uniform_real_distribution<float> xMov( -2.5f,2.5f );
+                    std::uniform_real_distribution<float> yMov( -2.5f,2.5f );
+                    eny[nEnemys - 1].Init( { xPos( rng ),yPos( rng ) },{ xMov( rng ),yMov( rng ) } );
+                    Counter = 0;
+                } while ( eny[nEnemys - 1].DoSpawnCollision( dud ) );
+            }
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_UP ) )
+        {
+            delta_mov = { 0,-1 };
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_DOWN ) )
+        {
+            delta_mov = { 0,1 };
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_LEFT ) )
+        {
+            delta_mov = { -1,0 };
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+        {
+            delta_mov = { 1,0 };
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_UP ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+        {
+            delta_mov.y = -1;
+        }
+        if ( wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_LEFT ) || wnd.kbd.KeyIsPressed( VK_DOWN ) && wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+        {
+            delta_mov.y = 1;
+        }
+        dud.MovBy( delta_mov );
+        for ( int i = 0; i < nEnemys; ++i )
+        {
+            eny[i].MovBy();
+            eny[i].DoWallCollision( walls );
+            if ( eny[i].DoDudCollision( dud ) )
+            {
+                pause = true;
+            }
+        }
     }
 }
 
 void Game::ComposeFrame()
 {
-    dud.Draw( sp );
-    for ( int i = 0; i < maxEnemys; ++i )
+    dud.Draw( gfx );
+    for ( int i = 0; i < nEnemys; ++i )
     {
         eny[i].Draw( gfx );
     }

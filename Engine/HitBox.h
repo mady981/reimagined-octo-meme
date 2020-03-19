@@ -8,6 +8,7 @@ public:
 	HitBox( const Vector& topleft,const Vector& bottemright );
 	HitBox( const Vector& topleft,float width,float height );
 	bool isOverlappingWith( const HitBox& other ) const;
+	bool isOverlappingWith( const Vector& other ) const;
 	static HitBox fromCenter( const Vector& center,float width,float height );
 public:
 	float left;

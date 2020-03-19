@@ -57,9 +57,19 @@ void Enemy::ReboundY()
 	vel.y = -vel.y;
 }
 
+bool Enemy::DoDudCollision( const Dud& dud )
+{
+	return GetHitBox().isOverlappingWith( dud.getHitBox() );
+}
+
+bool Enemy::DoSpawnCollision( const Dud& dud )
+{
+	return GetHitBox().isOverlappingWith( dud.getSaveZone() );
+}
+
 HitBox Enemy::GetHitBox() const
 {
-	return HitBox( pos,dimansion,dimansion );
+	return HitBox::fromCenter( pos,dimansion,dimansion );
 }
 
 const float Enemy::getDimanision() const
