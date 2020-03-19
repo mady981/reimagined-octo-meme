@@ -10,13 +10,15 @@ HitBox::HitBox( float left_in,float right_in,float top_in,float bottem_in )
 }
 
 HitBox::HitBox( const Vector& topleft,const Vector& bottemright )
+	:
+	HitBox( topleft.x,bottemright.x,topleft.y,bottemright.y )
 {
-	HitBox( topleft.x,bottemright.x,topleft.y,bottemright.y );
 }
 
 HitBox::HitBox( const Vector& topleft,float width,float height )
+	:
+	HitBox( topleft,topleft + Vector( width,height ) )
 {
-	HitBox( topleft,topleft + Vector( width,height ) );
 }
 
 bool HitBox::isOverlappingWith( const HitBox& other ) const
